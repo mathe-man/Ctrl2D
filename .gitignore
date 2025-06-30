@@ -1,0 +1,10 @@
+
+#Compilation files
+/bin
+/cmake-build-debug
+
+
+# Some code editors
+/.vscode
+/.idea
+/.code-workspace
