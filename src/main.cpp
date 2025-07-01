@@ -16,40 +16,36 @@
 
 
 
-
-
-
-// ===== Main Loop =====
 int main() {
 
+    // === Setup Raylib, Dear ImGui
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
-    InitWindow(800, 600, "Mini Editor with Raylib and ImGui");
+    InitWindow(800, 600, "Ctrl2D");
     rlImGuiSetup(true);
     ImGuiIO& io = ImGui::GetIO();
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
-    Scene scene = Scene(RAYWHITE);
-    GameObject* obj1 = scene.CreateObject("Hollow Circle");
-    obj1->AddComponent<EllipseOutline>(100, 50, RED);
-    obj1->AddComponent<RectangleFill>(100, 70, RED);
 
-    GameObject* obj2 = scene.CreateObject("Filled Circle");
-    obj2->AddComponent<EllipseFill>(50, 100, GREEN);
-    obj2->AddComponent<RectangleOutline>(50, 100, BLACK);
-    obj2->GetComponent<Transform2D>()->events.Get<TransformPositionChangedEvent>()
-    .subscribe([](const TransformPositionChangedEvent) {std::cout << "aaaa" << std::endl;});
+    // === Create and fill a new Scene with GameObjects
+    Scene scene = Scene();
 
-    obj2->GetComponent<Transform2D>()->SetPosition(Vector2{100, 100});
+    scene.CreateObject("Circle")
+        ->AddComponent<EllipseOutline>(Vector2{50, 50}, VIOLET);
+
+    GameObject* rect = scene.CreateObject("Rectangle");
+    rect->AddComponent<RectangleFill>(Vector2{50, 70}, BLUE);
+
+    rect->GetComponent<Transform2D>()->SetPosition(Vector2{400, 200});
 
     while (!WindowShouldClose()) {
-        // Update
+        // Update everything in scene
         scene.Update();
 
         // Draw
         BeginDrawing();
             scene.Draw();
 
-        // Draw - GUI
+        // Draw - GUI (e.g. Inspector)
         rlImGuiBegin();
             scene.DrawEditor();
         rlImGuiEnd();
@@ -57,6 +53,8 @@ int main() {
         EndDrawing();
     }
 
+
+    // Close ImGui and Raylib
     rlImGuiShutdown();
     CloseWindow();
     return 0;
