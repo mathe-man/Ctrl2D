@@ -35,6 +35,7 @@ void Scene::DrawEditor()
     ImGui::SeparatorText("Scene infos");
 
     ImGui::Text("%zu objects in scene", objects.size());
+    ImGui::Text("Scene running at %d fps", GetFPS());
 
     const SceneDrawingTarget targets[] = {
         SceneDrawingTarget_NoSpecialTarget,
@@ -47,7 +48,7 @@ void Scene::DrawEditor()
         for (int i = 0; i < std::size(targets); i++)
         {
             bool is_selected = (targets[i] == drawingTarget);
-            if (ImGui::Selectable(GetDrawingTargetName(targets[i])), is_selected)
+            if (ImGui::Selectable(GetDrawingTargetName(targets[i]), is_selected))
                 drawingTarget = targets[i];
 
             if (is_selected)
@@ -55,14 +56,13 @@ void Scene::DrawEditor()
         }
         ImGui::EndCombo();
     }
-    std::cout << static_cast<int>(drawingTarget) << std::endl;
 
 
     if (ImGui::CollapsingHeader("Camera2D"))
     {
         ImGui::DragFloat2("offset", &renderCamera.offset.x, 1, -2000, 2000);
         ImGui::DragFloat2("target", &renderCamera.target.x, 2.5f, -500, 500);
-        ImGui::DragFloat("rotation", &renderCamera.rotation, 1, 0, 360);
+        ImGui::DragFloat("rotation", &renderCamera.rotation, 0.5f, 0, 360);
         ImGui::DragFloat("zoom", &renderCamera.zoom, 0.05f, 0.01, 15);
     }
 

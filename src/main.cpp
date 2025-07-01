@@ -22,7 +22,7 @@
 int main() {
 
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
-    InitWindow(800, 600, "Mini Unity Editor with Raylib and ImGui");
+    InitWindow(800, 600, "Mini Editor with Raylib and ImGui");
     rlImGuiSetup(true);
     ImGuiIO& io = ImGui::GetIO();
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
@@ -30,12 +30,14 @@ int main() {
     Scene scene = Scene(RAYWHITE);
     GameObject* obj1 = scene.CreateObject("Hollow Circle");
     obj1->AddComponent<EllipseOutline>(100, 50, RED);
-    obj1->GetComponent<Transform2D>()->position = {200, 300};
 
     GameObject* obj2 = scene.CreateObject("Filled Circle");
     obj2->AddComponent<EllipseFill>(50, 100, GREEN);
-    obj2->AddComponent<RectangleOutline>(50, 100, GREEN);
-    obj2->GetComponent<Transform2D>()->position = {400, 300};
+    obj2->AddComponent<RectangleOutline>(50, 100, BLACK);
+    obj2->GetComponent<Transform2D>()->events.Get<TransformPositionChangedEvent>()
+    .subscribe([](const TransformPositionChangedEvent) {std::cout << "aaaa" << std::endl;});
+
+    obj2->GetComponent<Transform2D>()->SetPosition(Vector2{100, 100});
 
     while (!WindowShouldClose()) {
         // Update

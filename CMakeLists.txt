@@ -5,7 +5,20 @@ project(Ctrl2D)
 # Set Cmake variables
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_VERBOSE_MAKEFILE ON)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
+
+# Set output directory
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    set(OUTPUT_PATH "${CMAKE_CURRENT_SOURCE_DIR}/bin/Debug")
+elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
+    set(OUTPUT_PATH "${CMAKE_CURRENT_SOURCE_DIR}/bin/Release")
+else()
+    set(OUTPUT_PATH "${CMAKE_CURRENT_SOURCE_DIR}/bin/Other")
+endif()
+
+set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_PATH})
+
+
+
 # Set project directories
 set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(CORE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src/Core)
@@ -36,6 +49,7 @@ add_executable(Ctrl2D
         src/Components/RectangleOutline.h
         src/Core/Scene.cpp
         src/Core/Scene.h
+        src/Core/Event.h
 )
 
 # Link libraries

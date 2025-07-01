@@ -23,7 +23,7 @@ void RectangleOutline::Draw()
 {
     Transform2D* t = owner->GetComponent<Transform2D>();
 
-    if (t) DrawRectangleLines((int)t->position.x, (int)t->position.y, (int)width, (int)height, color);
+    if (t) DrawRectangleLines((int)t->getPosition().x, (int)t->getPosition().y, int(width * t->getScale().x), int(height * t->getScale().y), color);
 }
 
 void RectangleOutline::Inspect()
