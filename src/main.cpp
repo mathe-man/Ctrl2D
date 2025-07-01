@@ -27,7 +27,7 @@ int main() {
 
 
     // === Create and fill a new Scene with GameObjects
-    Scene scene = Scene();
+    Scene scene = Scene(WHITE);
 
     scene.CreateObject("Circle")
         ->AddComponent<EllipseOutline>(Vector2{50, 50}, VIOLET);

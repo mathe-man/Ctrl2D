@@ -52,6 +52,8 @@ add_executable(Ctrl2D
         src/Components/RectangleFill.h
         src/Components/EllipseFill.cpp
         src/Components/RectangleFill.cpp
+        src/Utils.cpp
+        src/Utils.h
 )
 
 # Link libraries

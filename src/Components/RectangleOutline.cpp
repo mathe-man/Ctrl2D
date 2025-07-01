@@ -2,6 +2,7 @@
 
 #include "../Core/GameObject.h"
 #include "imgui.h"
+#include "../Utils.h"
 
 
 RectangleOutline::RectangleOutline(float width, float height, Color color)
@@ -31,20 +32,8 @@ void RectangleOutline::Inspect()
     ImGui::SeparatorText(GetName());
 
     ImGui::DragFloat("width", &width, 0.5f);
-    ImGui::DragFloat("height", &width, 0.5f);
+    ImGui::DragFloat("height", &height, 0.5f);
 
-    // Convert Color into float[4] for ImGui
-    float colEdit[4] = {
-        color.r / 255.0f,
-        color.g / 255.0f,
-        color.b / 255.0f,
-        color.a / 255.0f
-    };
+    Utils::MakeImGuiColorEdit4(&color);
 
-    if (ImGui::ColorEdit4("color", colEdit)){
-        color.r = (unsigned char)(colEdit[0] * 255);
-        color.g = (unsigned char)(colEdit[1] * 255);
-        color.b = (unsigned char)(colEdit[2] * 255);
-        color.a = (unsigned char)(colEdit[3] * 255);
-    }
 }
