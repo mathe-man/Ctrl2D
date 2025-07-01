@@ -20,6 +20,13 @@ void Scene::Draw() const
     for (auto& o : objects)
         o->Draw();
 
+    // Draw a dot to indicate the object position
+    if (selected)
+    {
+        auto t = selected->GetComponent<Transform2D>();
+        if (t) DrawCircle(t->getPosition().x, t->getPosition().y, 4, BLUE);
+    }
+
     if (DrawingTargetUseCamera()) EndMode2D();
 
     if (DrawingTargetUseTexture())  EndTextureMode();
