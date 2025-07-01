@@ -9,9 +9,10 @@
 #include "rlImGui.h"
 #include "imgui.h"
 
+
+#include "GameObject.h"
 #include "Scene.h"
 #include "Components.h"
-#include "GameObject.h"
 
 
 
@@ -30,6 +31,7 @@ int main() {
     Scene scene = Scene(RAYWHITE);
     GameObject* obj1 = scene.CreateObject("Hollow Circle");
     obj1->AddComponent<EllipseOutline>(100, 50, RED);
+    obj1->AddComponent<RectangleFill>(100, 70, RED);
 
     GameObject* obj2 = scene.CreateObject("Filled Circle");
     obj2->AddComponent<EllipseFill>(50, 100, GREEN);

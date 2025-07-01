@@ -8,3 +8,4 @@
 #include "EllipseFill.h"
 
 #include "RectangleOutline.h"
+#include "RectangleFill.h"

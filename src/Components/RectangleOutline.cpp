@@ -41,7 +41,7 @@ void RectangleOutline::Inspect()
         color.a / 255.0f
     };
 
-    if (ImGui::ColorEdit4("Color", colEdit)){
+    if (ImGui::ColorEdit4("color", colEdit)){
         color.r = (unsigned char)(colEdit[0] * 255);
         color.g = (unsigned char)(colEdit[1] * 255);
         color.b = (unsigned char)(colEdit[2] * 255);

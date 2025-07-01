@@ -1,5 +1,5 @@
-#include "Components.h"
-#include "../Core/GameObject.h"
+#include "EllipseFill.h"
+#include "GameObject.h"
 
 
 void EllipseFill::Draw()

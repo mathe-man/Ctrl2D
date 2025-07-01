@@ -1,5 +1,6 @@
 #pragma once
 #include "EllipseOutline.h"
+#include "Transform2D.h"
 
 
 class EllipseFill : public EllipseOutline {
@@ -12,5 +13,6 @@ public:
 
 
     void Draw() override;
+
     const char* GetName() const override {return "EllipseFill";}
 };

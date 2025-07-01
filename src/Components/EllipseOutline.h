@@ -1,5 +1,5 @@
 #pragma once
-#include "../Core/Component.h"
+#include "Component.h"
 #include "raylib.h"
 
 
@@ -12,5 +12,6 @@ public:
     EllipseOutline(Vector2 dimensions, Color color);
     const char* GetName() const override {return "EllipseOutline";}
 
+    void Inspect() override;
     void Draw() override;
 };
