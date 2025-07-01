@@ -13,18 +13,12 @@
 #include "GameObject.h"
 #include "Scene.h"
 #include "Components.h"
-
+#include "Editor.h"
 
 
 int main() {
-
-    // === Setup Raylib, Dear ImGui
-    SetConfigFlags(FLAG_WINDOW_RESIZABLE);
-    InitWindow(800, 600, "Ctrl2D");
-    rlImGuiSetup(true);
-    ImGuiIO& io = ImGui::GetIO();
-    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-
+    //Create - Init a Ctrl2D app
+    Ctrl2DApp app = Ctrl2DApp(true);
 
     // === Create and fill a new Scene with GameObjects
     Scene scene = Scene(WHITE);
@@ -37,25 +31,13 @@ int main() {
 
     rect->GetComponent<Transform2D>()->SetPosition(Vector2{400, 200});
 
-    while (!WindowShouldClose()) {
-        // Update everything in scene
-        scene.Update();
 
-        // Draw
-        BeginDrawing();
-            scene.Draw();
-
-        // Draw - GUI (e.g. Inspector)
-        rlImGuiBegin();
-            scene.DrawEditor();
-        rlImGuiEnd();
-
-        EndDrawing();
-    }
+    // Run the scene in the app
+    app.RunEditor(&scene);
+    std::cout << "Editor ended" << std::endl;
+    app.RunScene(&scene);
 
 
-    // Close ImGui and Raylib
-    rlImGuiShutdown();
-    CloseWindow();
+
     return 0;
 }
