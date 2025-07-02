@@ -21,7 +21,8 @@ void OnEvent(const TransformPositionChangedEvent e)
 }
 int main() {
     //Create - Init a Ctrl2D app
-    Ctrl2DApp app = Ctrl2DApp(true);
+    Ctrl2DApp app;
+    app = Ctrl2DApp(true);
 
     // === Create and fill a new Scene with GameObjects
     Scene scene = Scene(WHITE);

@@ -72,6 +72,9 @@ void Ctrl2DApp::RunScene(Scene* scene, bool shutdownAtEnd)
 
 void Ctrl2DApp::Shutdown()
 {
+    if (!isInited)
+        return;
+
     rlImGuiShutdown();
     CloseWindow();
     isInited = false;
