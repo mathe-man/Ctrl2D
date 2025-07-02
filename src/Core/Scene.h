@@ -45,7 +45,6 @@ public:
     void Start();
     void Update();
     void Draw() const;
-    void DrawEditor();
 
     bool DrawingTargetUseCamera() const
     {
@@ -58,21 +57,23 @@ public:
                 drawingTarget == SceneDrawingTarget_CameraAndTexture;
     }
 
-private:
-    void UpdateTextureSize();
-    void UpdateCameraOffset();
-    static void CreateMainDockSpace();
-
     static const char* GetDrawingTargetName(SceneDrawingTarget target)
     {
         switch (target)
         {
-            case SceneDrawingTarget_NoSpecialTarget : return "No special target";
-            case SceneDrawingTarget_Camera          : return "Camera";
-            case SceneDrawingTarget_Texture         : return "Texture";
-            case SceneDrawingTarget_CameraAndTexture: return "Camera & Texture";
+        case SceneDrawingTarget_NoSpecialTarget : return "No special target";
+        case SceneDrawingTarget_Camera          : return "Camera";
+        case SceneDrawingTarget_Texture         : return "Texture";
+        case SceneDrawingTarget_CameraAndTexture: return "Camera & Texture";
         }
         return nullptr;
     }
+
+private:
+    void UpdateTextureSize();
+
+    void UpdateCameraOffset();
+
+    static void CreateMainDockSpace();
 };
 

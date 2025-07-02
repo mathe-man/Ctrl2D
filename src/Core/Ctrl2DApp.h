@@ -5,6 +5,9 @@ class Ctrl2DApp {
     bool isInited = false;
     bool isDarkTheme = true;
 
+    void CreateMainDockSpace();
+    void DrawEditor(Scene* scene);
+
 public:
     Ctrl2DApp(bool immediateInit = false, Vector2 windowSize = Vector2{720, 720}, const char* title = "Ctrl2D App", bool darkTheme = true)
         {if (immediateInit) Init(windowSize, title, darkTheme, true);}

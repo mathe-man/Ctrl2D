@@ -13,7 +13,7 @@
 #include "GameObject.h"
 #include "Scene.h"
 #include "Components.h"
-#include "Editor.h"
+#include "Ctrl2DApp.h"
 
 void OnEvent(const TransformPositionChangedEvent e)
 {

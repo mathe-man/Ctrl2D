@@ -54,8 +54,8 @@ add_executable(Ctrl2D
         src/Components/RectangleFill.cpp
         src/Utils.cpp
         src/Utils.h
-        src/Core/Editor.cpp
-        src/Core/Editor.h
+        src/Core/Ctrl2DApp.cpp
+        src/Core/Ctrl2DApp.h
 )
 
 # Link libraries
