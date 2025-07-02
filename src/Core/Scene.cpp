@@ -9,6 +9,26 @@ GameObject* Scene::CreateObject(const std::string& name)
     return objects.back().get();
 }
 
+void Scene::Awake()
+{
+    for (auto& o : objects)
+        o->Awake();
+}
+
+void Scene::Start()
+{
+    for (auto& o : objects)
+        o->Start();
+}
+
+void Scene::Update()
+{
+    UpdateTextureSize();
+    UpdateCameraOffset();
+    for (auto& o : objects)
+        o->Update();
+}
+
 void Scene::Draw() const
 {
     if (DrawingTargetUseTexture())  BeginTextureMode(renderTexture);

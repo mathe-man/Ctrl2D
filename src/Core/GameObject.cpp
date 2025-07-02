@@ -3,6 +3,18 @@
 #include "imgui.h"
 
 
+void GameObject::Awake()
+{
+    for (auto& comp : components)
+        comp->Awake();
+}
+
+void GameObject::Start()
+{
+    for (auto& comp : components)
+        comp->Start();
+}
+
 void GameObject::Update()
 {
     for (auto& comp : components)

@@ -20,8 +20,10 @@ public:
     template<typename T>
     T* GetComponent();
 
-    void Update();
-    void Draw();
+    void Awake  ();
+    void Start  ();
+    void Update ();
+    void Draw   ();
     void Inspect();
 };
 

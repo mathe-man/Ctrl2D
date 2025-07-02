@@ -41,15 +41,10 @@ public:
 
     GameObject* CreateObject(const std::string& name);
 
-    void Update(){
-        UpdateTextureSize();
-        UpdateCameraOffset();
-        for (auto& o : objects)
-            o->Update();
-    }
-
+    void Awake();
+    void Start();
+    void Update();
     void Draw() const;
-
     void DrawEditor();
 
     bool DrawingTargetUseCamera() const
