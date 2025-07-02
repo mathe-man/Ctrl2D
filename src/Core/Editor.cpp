@@ -24,7 +24,6 @@ void Ctrl2DApp::Init(Vector2 windowSize, const char* title, bool darkTheme, bool
 void Ctrl2DApp::RunEditor(Scene* scene, bool shutdownAtEnd)
 {
     Init();
-    std::cout << WindowShouldClose() << std::endl;
 
     while (!WindowShouldClose())
     {
@@ -52,7 +51,6 @@ void Ctrl2DApp::RunEditor(Scene* scene, bool shutdownAtEnd)
 void Ctrl2DApp::RunScene(Scene* scene, bool shutdownAtEnd)
 {
     Init();
-    std::cout << WindowShouldClose() << std::endl;
 
     while (!WindowShouldClose())
     {

@@ -15,7 +15,10 @@
 #include "Components.h"
 #include "Editor.h"
 
-
+void OnEvent(const TransformPositionChangedEvent e)
+{
+    std::cout << "caca";
+}
 int main() {
     //Create - Init a Ctrl2D app
     Ctrl2DApp app = Ctrl2DApp(true);
@@ -29,7 +32,15 @@ int main() {
     GameObject* rect = scene.CreateObject("Rectangle");
     rect->AddComponent<RectangleFill>(Vector2{50, 70}, BLUE);
 
-    rect->GetComponent<Transform2D>()->SetPosition(Vector2{400, 200});
+    auto* rectTrans = rect->GetComponent<Transform2D>();
+    rectTrans->SetPosition(Vector2{400, 200});
+
+    // Subscribe to the position changed event
+    rectTrans->SubscrineToEvent<TransformPositionChangedEvent>(
+    [](TransformPositionChangedEvent e)
+    {
+        std::cout<< "New value: (" << e.newValue.x << ";" << e.newValue.y << ")" << std::endl;
+    });
 
 
     // Run the scene in the app

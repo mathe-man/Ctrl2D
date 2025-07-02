@@ -18,6 +18,7 @@ private:
     float rotation = 0;
     Vector2 scale = {1, 1};
 
+    EventDispatcher events = EventDispatcher();
 public:
     Vector2 getPosition() {return position;}
     float   getRotation() {return rotation;}
@@ -28,9 +29,12 @@ public:
         position = newPosition;
     }
 
+    // Subscribe a function to the wanted event
+    template<typename eventType>
+    void SubscrineToEvent(std::function<void(const eventType&)> function) {events.Get<eventType>().subscribe(function);}
 
     void Inspect() override;
     const char* GetName() const override {return "Transform2D";}
-    EventDispatcher events = EventDispatcher();
+
 };
 

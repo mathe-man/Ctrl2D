@@ -75,3 +75,44 @@ private:
     std::unordered_map<std::type_index, std::unique_ptr<IEvent>> events;
 
 };
+
+
+/*  HOW EVENTS SHOULD BE IMPLEMENTED
+ *  This part provide the correct method to add an event to a class
+ *  Objective:
+ *  Keep the event emit private,
+ *  subscribing to the event should be public.
+ *  Note that the Transform2D component is also a good exemple for that
+ *  Code exemple:
+ *
+struct MyClassInstantiatedEvent  : IEvent {}
+struct MyClassDeConstructedEvent : IEvent {}
+
+
+class MyClass {
+private:
+    EventDispatcher eventsDisp = EventDispatcher();
+
+public:
+    int myId
+    MyClass(int id) {
+        myId = id;
+        eventsDisp.Emit(MyClassInstantiatedEvent{});
+    }
+
+    ~MyClass { eventsDisp.Emit(MyClassDeConstructedEvent{}); }
+
+
+    template<typename eventType>
+    static SubToEvent(std::function<void(const eventType&)> function) {
+        eventsDisp.Get<eventType>().subscribe(function);
+    }
+}
+
+*/
+
+
+
+
+
+
