@@ -56,7 +56,7 @@ public:
      */
     void Draw   ();
     /** @brief Is called to draw this GameObject inspector in the Editor.
-     * @remarks This is cammed in a ImGui frame, so use rlImGui or ImGui methods.
+     * @remarks This is called in a ImGui frame, so use rlImGui or ImGui methods.
      * @remarks The Editor already create an ImGui window using ImGui::Begin().
      * @remarks Create a new ImGui window only if it's necessary.
      */
