@@ -15,10 +15,7 @@
 #include "Components.h"
 #include "Ctrl2DApp.h"
 
-void OnEvent(const TransformPositionChangedEvent e)
-{
-    std::cout << "caca";
-}
+
 int main() {
     //Create - Init a Ctrl2D app
     Ctrl2DApp app;
@@ -47,7 +44,6 @@ int main() {
     // Run the scene in the app
     app.RunEditor(&scene);
     std::cout << "Editor ended" << std::endl;
-    app.RunScene(&scene);
 
 
 
