@@ -1,4 +1,4 @@
-#include "RectangleOutline.h"
+#include "Rectangle.h"
 
 #include "../Core/GameObject.h"
 #include "imgui.h"
@@ -36,4 +36,12 @@ void RectangleOutline::Inspect()
 
     Utils::MakeImGuiColorEdit4(&color);
 
+}
+
+
+
+void RectangleFill::Draw()
+{
+    Transform2D* t = owner->GetComponent<Transform2D>();
+    if (t) DrawRectangle((int)t->getPosition().x, (int)t->getPosition().y, int(width * t->getScale().x), int(height * t->getScale().y), color);
 }

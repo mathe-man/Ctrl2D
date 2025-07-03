@@ -43,13 +43,11 @@ add_executable(Ctrl2D
         src/Components/Ellipse.cpp
         src/Components/Ellipse.h
         src/Components/Components.h
-        src/Components/RectangleOutline.cpp
-        src/Components/RectangleOutline.h
+        src/Components/Rectangle.cpp
+        src/Components/Rectangle.h
         src/Core/Scene.cpp
         src/Core/Scene.h
         src/Core/Event.h
-        src/Components/RectangleFill.h
-        src/Components/RectangleFill.cpp
         src/Utils.cpp
         src/Utils.h
         src/Core/Ctrl2DApp.cpp
