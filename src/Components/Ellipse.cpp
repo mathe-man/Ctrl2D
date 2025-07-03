@@ -1,4 +1,4 @@
-#include "EllipseOutline.h"
+#include "Ellipse.h"
 
 
 #include "imgui.h"
@@ -38,3 +38,8 @@ void EllipseOutline::Draw()
 }
 
 
+void EllipseFill::Draw()
+{
+    Transform2D* t = owner->GetComponent<Transform2D>();
+    if (t) DrawEllipse((int)t->getPosition().x, (int)t->getPosition().y, width * t->getScale().x, height * t->getScale().y, color);
+}

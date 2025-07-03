@@ -4,8 +4,7 @@
 
 #include "Transform2D.h"
 
-#include "EllipseOutline.h"
-#include "EllipseFill.h"
+#include "Ellipse.h"
 
 #include "RectangleOutline.h"
 #include "RectangleFill.h"

@@ -40,9 +40,8 @@ add_executable(Ctrl2D
 
         # Transform
         ${COMPS_DIR}/Transform2D.h    ${COMPS_DIR}/Transform2D.cpp
-        src/Components/EllipseOutline.cpp
-        src/Components/EllipseOutline.h
-        src/Components/EllipseFill.h
+        src/Components/Ellipse.cpp
+        src/Components/Ellipse.h
         src/Components/Components.h
         src/Components/RectangleOutline.cpp
         src/Components/RectangleOutline.h
@@ -50,7 +49,6 @@ add_executable(Ctrl2D
         src/Core/Scene.h
         src/Core/Event.h
         src/Components/RectangleFill.h
-        src/Components/EllipseFill.cpp
         src/Components/RectangleFill.cpp
         src/Utils.cpp
         src/Utils.h
