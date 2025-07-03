@@ -104,7 +104,7 @@ public:
 
 
     template<typename eventType>
-    static SubToEvent(std::function<void(const eventType&)> function) {
+    static void SubToEvent(std::function<void(const eventType&)> function) {
         eventsDisp.Get<eventType>().subscribe(function);
     }
 }
