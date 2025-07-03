@@ -11,26 +11,31 @@ GameObject* Scene::CreateObject(const std::string& name)
 
 void Scene::Awake()
 {
+    eventDispatcher.Emit(SceneAwakeEvent{});
     for (auto& o : objects)
         o->Awake();
 }
 
 void Scene::Start()
 {
+    eventDispatcher.Emit(SceneStartEvent{});
     for (auto& o : objects)
         o->Start();
 }
 
 void Scene::Update()
 {
+    eventDispatcher.Emit(SceneUpdateEvent{});
     UpdateTextureSize();
     UpdateCameraOffset();
     for (auto& o : objects)
         o->Update();
 }
 
-void Scene::Draw() const
+void Scene::Draw()
 {
+    eventDispatcher.Emit(SceneDrawEvent{});
+
     if (DrawingTargetUseTexture())  BeginTextureMode(renderTexture);
 
     ClearBackground(backgroundColor);

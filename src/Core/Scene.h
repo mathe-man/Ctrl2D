@@ -12,6 +12,10 @@ enum SceneDrawingTarget : char
     SceneDrawingTarget_Texture,
     SceneDrawingTarget_CameraAndTexture
 };
+struct SceneAwakeEvent  : IEvent {};
+struct SceneStartEvent  : IEvent {};
+struct SceneUpdateEvent : IEvent {};
+struct SceneDrawEvent   : IEvent {};
 
 
 class Scene {
@@ -44,7 +48,7 @@ public:
     void Awake();
     void Start();
     void Update();
-    void Draw() const;
+    void Draw();
 
     bool DrawingTargetUseCamera() const
     {
@@ -69,9 +73,16 @@ public:
         return nullptr;
     }
 
+    template<typename eventType>
+    void SubscribeToEvent(std::function<void(const eventType&)> function){
+        eventDispatcher.Get<eventType>().subscribe(function);
+    }
+
 private:
     void UpdateTextureSize();
 
     void UpdateCameraOffset();
+
+    EventDispatcher eventDispatcher = EventDispatcher();
 };
 
