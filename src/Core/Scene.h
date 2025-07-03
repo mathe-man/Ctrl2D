@@ -73,7 +73,5 @@ private:
     void UpdateTextureSize();
 
     void UpdateCameraOffset();
-
-    static void CreateMainDockSpace();
 };
 
