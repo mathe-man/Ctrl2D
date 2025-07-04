@@ -26,7 +26,7 @@ public:
     /// <param name="windowSize">The window size with x for width and y for height. The window is resizable</param>
     /// <param name="title">The title of the window</param>
     /// <param name="darkTheme">The dark theme only affect ImGui (When running Editor)</param>
-     explicit Ctrl2DApp(bool immediateInit = false, Vector2 windowSize = Vector2{720, 720}, const char* title = "Ctrl2D App", bool darkTheme = true)
+     explicit Ctrl2DApp(bool immediateInit = true, Vector2 windowSize = Vector2{720, 720}, const char* title = "Ctrl2D App", bool darkTheme = true)
         {if (immediateInit) Init(windowSize, title, darkTheme, true);}
 
     /// <summary> Initiate a window for this app </summary>
