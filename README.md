@@ -12,7 +12,7 @@ It aims to provide a fast and simple environment to create or prototyping game o
 - 🎮 **Real-time rendering** with raylib
 - 🛠️ Transform2D system (position, rotation, scale)
 - 🎨 Viewport camera and drawing target selector
-- 🔄 Runtime interaction: selection, manipulation, rendering
+- 🔄 Runtime interaction using the editor
 
 ---
 
