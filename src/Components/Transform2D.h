@@ -24,10 +24,30 @@ public:
     float   getRotation() {return rotation;}
     Vector2 getScale()    {return scale;}
 
-    void SetPosition(Vector2 newPosition){
-        events.Emit(TransformPositionChangedEvent{position, newPosition, newPosition});
+    void setPosition(Vector2 newPosition){
+        if (newPosition == position) return; // Admit that the position didn't change
+
+        auto pastp = position;
         position = newPosition;
+        events.Emit(TransformPositionChangedEvent{pastp, position, Vector2Subtract(position, pastp)});
     }
+    void setRotation(float newRotation){
+        if (newRotation == rotation) return; // Admit that the rotation didn't change
+
+        auto pastr = rotation;
+        rotation = newRotation;
+        events.Emit(TransformRotationChangedEvent{pastr, rotation, rotation - pastr});
+    }
+    void setScale(Vector2 newScale){
+        if (newScale == scale) return; // Admit that the scale didn't change
+
+        auto pasts = scale;
+        scale = newScale;
+        events.Emit(TransformScaleChangedEvent{pasts, scale, scale - pasts});
+    }
+    void MovePosition(Vector2 distance) { setPosition(position + distance); }
+    void MoveRotation(float distance)   { setRotation(rotation + distance); }
+    void MoveScale(Vector2 distance)    { setScale(scale + distance);       }
 
     // Subscribe a function to the wanted event
     template<typename eventType>

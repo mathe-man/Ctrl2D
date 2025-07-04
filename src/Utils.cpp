@@ -91,7 +91,7 @@ public:
         Transform2D* t = owner->GetComponent<Transform2D>();
         if (t)
         {
-            t->SetPosition(t->getPosition() + move);
+            t->setPosition(t->getPosition() + move);
         }
     }
 
