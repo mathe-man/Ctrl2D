@@ -54,3 +54,4 @@ See the [license](LICENSE) file for details.
 ## 🤝 Contributing
 Pull requests, feedback, and ideas are welcome!
 For major changes, please open an issue first to discuss your proposals.
+Or just join the [discord server](https://discord.gg/HnZGnbYR)
