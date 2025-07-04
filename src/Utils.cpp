@@ -2,7 +2,12 @@
 
 #include <iostream>
 
+#include "Component.h"
+#include "Ctrl2DApp.h"
+#include "GameObject.h"
+#include "raylib.h"
 #include "imgui.h"
+#include "Transform2D.h"
 
 
 void Utils::MakeImGuiColorEdit4(Color* color)
@@ -67,3 +72,52 @@ void Utils::LoadIconFont(bool forceLoading)
 }
 
 */
+
+
+
+class DemoScriptComponent : public Component
+{
+public:
+    float speed = 100.0f;
+    void Update() override
+    {
+        float dt = GetFrameTime(); // DeltaTime
+        Vector2 move {0, 0};
+        if (IsKeyDown(KEY_LEFT))  move.x    -= 1 * speed * dt;
+        if (IsKeyDown(KEY_RIGHT)) move.x    += 1 * speed * dt;
+        if (IsKeyDown(KEY_UP))    move.y    -= 1 * speed * dt;
+        if (IsKeyDown(KEY_DOWN))  move.y    += 1 * speed * dt;
+
+        Transform2D* t = owner->GetComponent<Transform2D>();
+        if (t)
+        {
+            t->SetPosition(t->getPosition() + move);
+        }
+    }
+
+    void Inspect() override
+    {
+        ImGui::DragFloat("speed", &speed, 0.1f);
+    }
+    const char* GetName() const override {return "DemoComponent";}
+};
+void Utils::ShowDemoApp()
+{
+    Ctrl2DApp app = Ctrl2DApp();
+    app.Init();
+
+    Scene scene = Scene(WHITE);
+
+    GameObject* obj =scene.CreateObject("My Object");
+    obj->AddComponent<DemoScriptComponent>();
+    obj->GetComponent<Transform2D>()->SubscrineToEvent<TransformPositionChangedEvent>(
+        [](TransformPositionChangedEvent e)
+        {
+            std::cout << "Position changed to x:" << e.newValue.x
+                                        << ", y:" << e.newValue.y << std::endl;
+        });
+
+    obj->AddComponent<EllipseOutline>(50, 50, GREEN);
+
+    app.RunEditor(&scene);
+}

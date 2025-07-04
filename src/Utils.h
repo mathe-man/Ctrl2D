@@ -13,4 +13,7 @@ public:
 
 
     static void MakeImGuiIconText(const char* icon_unicode, const char* text) {}
+
+
+    static void ShowDemoApp();
 };
