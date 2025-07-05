@@ -40,7 +40,6 @@ public:
         renderCamera.rotation   = 0.0f;
         renderCamera.zoom       = 1.0f;
 
-        UpdateCameraOffset();
     }
 
     GameObject* CreateObject(const std::string& name);

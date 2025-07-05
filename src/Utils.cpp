@@ -104,7 +104,6 @@ public:
 void Utils::ShowDemoApp()
 {
     Ctrl2DApp app = Ctrl2DApp();
-    app.Init();
 
     Scene scene = Scene(WHITE);
 

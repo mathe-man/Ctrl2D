@@ -22,8 +22,6 @@ EllipseOutline::EllipseOutline(Vector2 dimensions, Color color)
 
 void EllipseOutline::Inspect()
 {
-    ImGui::SeparatorText(GetName());
-
     ImGui::DragFloat(std::string(std::string("width##") + GetName()).c_str(), &width, 0.5f, 0, 1000);
     ImGui::DragFloat(std::string(std::string("height##") + GetName()).c_str(), &height, 0.5f, 0, 1000);
 

@@ -31,6 +31,9 @@ void GameObject::Inspect()
     ImGui::Text("Game Object: %s", name.c_str());
     ImGui::Text("With %zu components", components.size());
     for (auto& comp : components)
-        comp->Inspect();
-    ImGui::Separator();
+    {
+        if (ImGui::CollapsingHeader(comp->GetName()))
+            comp->Inspect();
+        ImGui::Separator();
+    }
 }

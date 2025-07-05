@@ -29,8 +29,6 @@ void RectangleOutline::Draw()
 
 void RectangleOutline::Inspect()
 {
-    ImGui::SeparatorText(GetName());
-
     ImGui::DragFloat("width", &width, 0.5f);
     ImGui::DragFloat("height", &height, 0.5f);
 

@@ -10,7 +10,6 @@ void Transform2D::Inspect()
     auto pastRot = rotation;
     auto pastScale = scale;
 
-    ImGui::SeparatorText(GetName());
 
     // Show each fields, emit and event only if the value as changed
     if (ImGui::DragFloat2("position", &position.x, 1.0f, -1000, 1000))
