@@ -48,6 +48,8 @@ public:
     }
 
     GameObject* CreateObject(const std::string& name, bool selectNewObject = true);
+    bool RemoveObject(GameObject* object);
+    bool RemoveObject(const int index);
 
     void Awake();
     void Start();

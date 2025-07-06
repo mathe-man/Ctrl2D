@@ -10,6 +10,33 @@ GameObject* Scene::CreateObject(const std::string& name, bool selectNewObject)
     return objects.back().get();
 }
 
+bool Scene::RemoveObject(GameObject* object)
+{
+    for (auto it = objects.begin(); it != objects.end(); ++it)
+        if (it->get() == object)
+        {
+            if (object == selected) selected = nullptr;
+
+            it->reset();
+            objects.erase(it);
+            return true;
+        }
+
+    return false;
+}
+bool Scene::RemoveObject(const int index)
+{
+    if (index >= objects.size())
+        return false;
+
+    if (objects.at(index).get() == selected) selected = nullptr;
+
+    objects.erase(objects.begin() + index);
+    return true;
+}
+
+
+
 void Scene::Awake()
 {
     eventDispatcher.Emit(SceneAwakeEvent{});
