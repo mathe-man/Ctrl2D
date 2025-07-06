@@ -1,5 +1,6 @@
 #include "Ctrl2DApp.h"
 #include "imgui.h"
+#include "imgui_internal.h"
 #include "rlImGui.h"
 #include "raylib.h"
 
@@ -84,7 +85,7 @@ void Ctrl2DApp::Shutdown()
 void Ctrl2DApp::DrawEditor(Scene* scene)
 {
     CreateMainDockSpace();
-
+    ImGui::ShowDemoWindow();
 
     ImGui::Begin("Scene control panel");
     ImGui::SeparatorText("Scene infos");
@@ -92,29 +93,24 @@ void Ctrl2DApp::DrawEditor(Scene* scene)
     ImGui::Text("%zu objects in scene", scene->objects.size());
     ImGui::Text("Scene running at %d fps", GetFPS());
 
-    const SceneDrawingTarget targets[] = {
-        SceneDrawingTarget_NoSpecialTarget,
-        SceneDrawingTarget_Camera,
-        SceneDrawingTarget_Texture,
-        SceneDrawingTarget_CameraAndTexture
-    };
 
-    if (ImGui::BeginCombo("drawing target", Scene::GetDrawingTargetName(scene->drawingTarget))) {
-        for (int i = 0; i < std::size(targets); i++)
-        {
-            bool is_selected = (targets[i] == scene->drawingTarget);
-            if (ImGui::Selectable(Scene::GetDrawingTargetName(targets[i]), is_selected))
-                scene->drawingTarget = targets[i];
-
-            if (is_selected)
-                ImGui::SetItemDefaultFocus();
-        }
-        ImGui::EndCombo();
-    }
 
 
     if (ImGui::CollapsingHeader("Camera2D"))
     {
+        if (ImGui::BeginCombo("drawing target", Scene::GetDrawingTargetName(scene->drawingTarget), ImGuiComboFlags_WidthFitPreview)) {
+            for (int i = 0; i < 4; i++)
+            {
+                bool is_selected = SceneDrawingTarget(i) == scene->drawingTarget;
+                if (ImGui::Selectable(Scene::GetDrawingTargetName(SceneDrawingTarget(i)), is_selected))
+                    scene->drawingTarget = SceneDrawingTarget(i);
+
+                if (is_selected)
+                    ImGui::SetItemDefaultFocus();
+            }
+        ImGui::EndCombo();
+    }
+
         ImGui::DragFloat2("offset", &scene->renderCamera.offset.x, 1, -2000, 2000);
         ImGui::DragFloat2("target", &scene->renderCamera.target.x, 2.5f, -500, 500);
         ImGui::DragFloat("rotation", &scene->renderCamera.rotation, 0.5f, 0, 360);
@@ -125,6 +121,45 @@ void Ctrl2DApp::DrawEditor(Scene* scene)
 
     if (ImGui::CollapsingHeader("Objects"))
     {
+        // Create a new object
+        static char objName[64];
+
+
+        ImGui::Button("Create Object");
+        if (ImGui::BeginPopupContextItem("Create Object", ImGuiPopupFlags_MouseButtonLeft))
+        {
+            // Make the text input focused by default
+            ImGui::SetKeyboardFocusHere();
+            // Create a text input for the object name
+            const bool EnterPressedOnInput = ImGui::InputText("##NameInput", objName, sizeof(objName),
+                                                                ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll);
+
+            // Show tips if the input is hovered
+            if (ImGui::IsItemHovered(ImGuiHoveredFlags_Stationary))
+                ImGui::SetTooltip("Enter a name for the new object. "
+                                  "The name should not be empty or start with a blank space");
+
+            // A name is valid if it's not empty and do not start with a blank space
+            const bool IsNameValid = objName[0] != '\0' && objName[0] != ' ';
+            // Create object if enter is pressed and the name is valid
+            if (EnterPressedOnInput && IsNameValid) {
+                scene->CreateObject(objName);
+
+                objName[0] = '\0';
+                ImGui::CloseCurrentPopup();
+            }
+            // Close the popup if the field is empty
+            else if (EnterPressedOnInput){
+                ImGui::CloseCurrentPopup();
+                objName[0] = '\0';
+            }
+
+            ImGui::EndPopup();
+        }
+
+
+
+        // Show scene objects
         for (auto& obj : scene->objects) {
             if (ImGui::Selectable(obj->name.c_str(), scene->selected == obj.get())) {
                 scene->selected = obj.get();
@@ -136,9 +171,13 @@ void Ctrl2DApp::DrawEditor(Scene* scene)
 
 
     if (scene->selected) {
+        GameObject* s = scene->selected;
+
 
         ImGui::Begin("Inspector");
-        scene->selected->Inspect();
+            ImGui::Text("Game Object: %s", s->name.c_str());
+            ImGui::Text("With %zu components", s->components.size());
+            s->Inspect();
         ImGui::End();
 
     }

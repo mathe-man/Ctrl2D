@@ -28,8 +28,6 @@ void GameObject::Draw()
 }
 void GameObject::Inspect()
 {
-    ImGui::Text("Game Object: %s", name.c_str());
-    ImGui::Text("With %zu components", components.size());
     for (auto& comp : components)
     {
         if (ImGui::CollapsingHeader(comp->GetName()))
