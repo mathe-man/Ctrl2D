@@ -42,7 +42,7 @@ public:
 
     }
 
-    GameObject* CreateObject(const std::string& name);
+    GameObject* CreateObject(const std::string& name, bool selectNewObject = true);
 
     void Awake();
     void Start();

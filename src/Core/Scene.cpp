@@ -1,11 +1,12 @@
 #include "Scene.h"
 #include "imgui.h"
 
-GameObject* Scene::CreateObject(const std::string& name)
+GameObject* Scene::CreateObject(const std::string& name, bool selectNewObject)
 {
     auto obj = std::make_unique<GameObject>(name, this);
     obj->AddComponent<Transform2D>();
     objects.emplace_back(std::move(obj));
+    if (selectNewObject) selected = objects.back().get();
     return objects.back().get();
 }
 
