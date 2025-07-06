@@ -1,5 +1,6 @@
-#include "Scene.h"
 #include "imgui.h"
+#include "Scene.h"
+#include "Transform2D.h"
 
 GameObject* Scene::CreateObject(const std::string& name, bool selectNewObject)
 {

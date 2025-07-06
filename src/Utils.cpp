@@ -4,6 +4,7 @@
 
 #include "Component.h"
 #include "Ctrl2DApp.h"
+#include "Ellipse.h"
 #include "GameObject.h"
 #include "raylib.h"
 #include "imgui.h"

@@ -1,8 +1,9 @@
 #include "Rectangle.h"
 
-#include "../Core/GameObject.h"
+#include "GameObject.h"
 #include "imgui.h"
-#include "../Utils.h"
+#include "Transform2D.h"
+#include "Utils.h"
 
 
 RectangleOutline::RectangleOutline(float width, float height, Color color)

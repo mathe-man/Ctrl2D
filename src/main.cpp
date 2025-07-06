@@ -5,15 +5,6 @@
 // ImGui for editor UI
 // ==============================
 
-#include "raylib.h"
-#include "rlImGui.h"
-#include "imgui.h"
-
-
-#include "GameObject.h"
-#include "Scene.h"
-#include "Components.h"
-#include "Ctrl2DApp.h"
 #include "Utils.h"
 
 

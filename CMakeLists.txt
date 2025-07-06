@@ -42,7 +42,6 @@ add_executable(Ctrl2D
         ${COMPS_DIR}/Transform2D.h    ${COMPS_DIR}/Transform2D.cpp
         src/Components/Ellipse.cpp
         src/Components/Ellipse.h
-        src/Components/Components.h
         src/Components/Rectangle.cpp
         src/Components/Rectangle.h
         src/Core/Scene.cpp
