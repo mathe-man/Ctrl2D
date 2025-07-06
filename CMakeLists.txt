@@ -6,16 +6,9 @@ project(Ctrl2D)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 
-# Set output directory
-if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    set(OUTPUT_PATH "${CMAKE_CURRENT_SOURCE_DIR}/bin/Debug")
-elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
-    set(OUTPUT_PATH "${CMAKE_CURRENT_SOURCE_DIR}/bin/Release")
-else()
-    set(OUTPUT_PATH "${CMAKE_CURRENT_SOURCE_DIR}/bin/Other")
-endif()
+# Set output directory to the a folder depending of the build type
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY  "${CMAKE_CURRENT_SOURCE_DIR}/bin/${CMAKE_BUILD_TYPE}")
 
-set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_PATH})
 
 
 
