@@ -20,7 +20,7 @@ struct SceneDrawEvent   : IEvent {};
 
 class Scene {
 public:
-    std::vector<std::unique_ptr<GameObject>> objects;
+    std::vector<std::shared_ptr<GameObject>> objects;
     GameObject* selected = nullptr;
 
     Color backgroundColor{};
@@ -32,13 +32,18 @@ public:
 
     Scene(Color backgroundColor = DARKGRAY)
     {
-        objects = std::vector<std::unique_ptr<GameObject>>();
+        objects = std::vector<std::shared_ptr<GameObject>>();
         selected = nullptr;
         this->backgroundColor = backgroundColor;
 
         renderCamera.target     = {0,0};
         renderCamera.rotation   = 0.0f;
         renderCamera.zoom       = 1.0f;
+
+    }
+    ~Scene() {
+        for (auto object : objects)
+            object.reset();
 
     }
 
