@@ -1,6 +1,6 @@
 #include "Rectangle.h"
 
-#include "GameObject.h"
+#include "../ECS/GameObject.h"
 #include "imgui.h"
 #include "Transform2D.h"
 #include "Utils.h"

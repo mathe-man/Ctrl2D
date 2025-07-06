@@ -1,5 +1,5 @@
 #include "Event.h"
-#include "Component.h"
+#include "../ECS/Component.h"
 #include "raylib.h"
 #include "raymath.h"
 

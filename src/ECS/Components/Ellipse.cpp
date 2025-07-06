@@ -2,7 +2,7 @@
 
 
 #include "imgui.h"
-#include "GameObject.h"
+#include "../ECS/GameObject.h"
 #include "Transform2D.h"
 #include "../Utils.h"
 

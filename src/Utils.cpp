@@ -3,9 +3,9 @@
 #include <iostream>
 
 #include "Component.h"
-#include "Ctrl2DApp.h"
+#include "Application/Ctrl2DApp.h"
 #include "Ellipse.h"
-#include "GameObject.h"
+#include "ECS/GameObject.h"
 #include "raylib.h"
 #include "imgui.h"
 #include "Transform2D.h"

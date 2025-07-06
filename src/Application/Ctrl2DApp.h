@@ -1,5 +1,5 @@
 #pragma once
-#include "Scene.h"
+#include "../Core/Scene.h"
 
 class Ctrl2DApp {
     /// <summary>True if a raylib window (and ImGui) have been inited</summary>

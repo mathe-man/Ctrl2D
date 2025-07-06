@@ -1,5 +1,5 @@
 #pragma once
-#include "../Core/Component.h"
+#include "../ECS/Component.h"
 #include "raylib.h"
 
 /** @brief A rectangle outline*/

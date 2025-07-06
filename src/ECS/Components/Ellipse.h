@@ -1,5 +1,5 @@
 #pragma once
-#include "Component.h"
+#include "../ECS/Component.h"
 #include "raylib.h"
 
 /** @brief Only draw the outline of an ellipse */

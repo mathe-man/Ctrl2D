@@ -2,7 +2,7 @@
 
 #include <memory>
 #include <vector>
-#include "GameObject.h"
+#include "../ECS/GameObject.h"
 #include "Event.h"
 #include "raylib.h"
 
