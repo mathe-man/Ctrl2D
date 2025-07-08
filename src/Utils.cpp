@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "Component.h"
+#include "Ctrl2DEditor.h"
 #include "Application/Ctrl2DApp.h"
 #include "Ellipse.h"
 #include "ECS/GameObject.h"
@@ -102,13 +103,13 @@ public:
     }
     const char* GetName() const override {return "DemoComponent";}
 };
-void Utils::ShowDemoApp()
+Scene* Utils::ShowDemoApp()
 {
     Ctrl2DApp app = Ctrl2DApp();
 
-    Scene scene = Scene(WHITE);
+    Scene* scene = new Scene(WHITE);
 
-    GameObject* obj =scene.CreateObject("My Object");
+    GameObject* obj =scene->CreateObject("My Object");
     obj->AddComponent<DemoScriptComponent>();
     obj->GetComponent<Transform2D>()->SubscrineToEvent<TransformPositionChangedEvent>(
         [](TransformPositionChangedEvent e)
@@ -119,5 +120,29 @@ void Utils::ShowDemoApp()
 
     obj->AddComponent<EllipseOutline>(50, 50, GREEN);
 
-    app.RunEditor(&scene);
+    app.RunScene(scene);
+
+    return scene;
+}
+
+Scene* Utils::ShowDemoEditor()
+{
+    Ctrl2DEditor ed = Ctrl2DEditor();
+
+    Scene* scene = new Scene(WHITE);
+
+    GameObject* obj = scene->CreateObject("My Object");
+    obj->AddComponent<DemoScriptComponent>();
+    obj->GetComponent<Transform2D>()->SubscrineToEvent<TransformPositionChangedEvent>(
+        [](TransformPositionChangedEvent e)
+        {
+            std::cout << "Position changed to x:" << e.newValue.x
+                                        << ", y:" << e.newValue.y << std::endl;
+        });
+
+    obj->AddComponent<EllipseOutline>(50, 50, GREEN);
+
+    ed.RunEditor(scene);
+
+    return scene;
 }

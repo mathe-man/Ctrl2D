@@ -1,8 +1,7 @@
 #pragma once
 
-#include <memory>
 #include <vector>
-#include "../ECS/GameObject.h"
+#include "GameObject.h"
 #include "Event.h"
 #include "raylib.h"
 

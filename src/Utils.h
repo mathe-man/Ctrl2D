@@ -1,6 +1,7 @@
 #pragma once
 #include "imgui.h"
 #include "raylib.h"
+#include "Scene.h"
 
 class Utils{
 private:
@@ -15,5 +16,6 @@ public:
     static void MakeImGuiIconText(const char* icon_unicode, const char* text) {}
 
 
-    static void ShowDemoApp();
+    static Scene* ShowDemoApp();
+    static Scene* ShowDemoEditor();
 };

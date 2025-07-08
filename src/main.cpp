@@ -10,7 +10,6 @@
 
 int main() {
 
-    Utils::ShowDemoApp();
     Utils::ShowDemoEditor();
 
     return 0;
