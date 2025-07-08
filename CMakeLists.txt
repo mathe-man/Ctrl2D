@@ -30,6 +30,7 @@ add_executable(Ctrl2D
 
         # Application classes
         ${APP_DIR}/Ctrl2DApp.h          ${APP_DIR}/Ctrl2DApp.cpp
+        ${APP_DIR}/Ctrl2DEditor.h       ${APP_DIR}/Ctrl2DEditor.cpp
 
 
         # Core classes
