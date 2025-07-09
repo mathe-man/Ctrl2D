@@ -208,7 +208,7 @@ bool Ctrl2DEditor::ValidNameInput(const char* label, std::function<void(const ch
 
 void Ctrl2DEditor::GameObjectInterations(GameObject* obj)
 {
-    if (ImGui::BeginPopupContextItem(obj->name.c_str()))
+    if (obj->scene->selected == obj && ImGui::BeginPopupContextItem(obj->name.c_str()))
     {
         if (ImGui::Button("Delete"))
         {
