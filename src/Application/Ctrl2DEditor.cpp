@@ -152,6 +152,29 @@ void Ctrl2DEditor::DrawEditor(Scene* scene)
         ImGui::Begin("Inspector");
             ImGui::Text("Game Object: %s", s->name.c_str());
             ImGui::Text("With %zu components", s->components.size());
+
+            // Add a new component
+            static int comp_selected_index = 0;
+            auto comps = getComponentsTypesNames();
+            if (ImGui::Button("Add new component"))
+                // Add a new instance of the selected component to the GameObject
+                s->AddComponent(getComponentsTypes()[comp_selected_index]());
+
+            ImGui::SameLine();
+            if (ImGui::BeginCombo("##selectionCombo", comps[comp_selected_index], ImGuiComboFlags_WidthFitPreview))
+            {
+                for (int i = 0; i < comps.size(); i++)
+                {
+                    const bool is_selected = (i == comp_selected_index);
+                    if (ImGui::Selectable(comps[i], is_selected))
+                        comp_selected_index = i;
+
+                    if (is_selected)
+                        ImGui::SetItemDefaultFocus();
+                }
+                ImGui::EndCombo();
+            }
+
             s->Inspect();
         ImGui::End();
 
@@ -190,3 +213,9 @@ void Ctrl2DEditor::CreateMainDockSpace()
 
     ImGui::End();
 }
+
+
+// define static properties
+using ComponentConstructor = Component* (*)();
+std::vector<ComponentConstructor>   Ctrl2DEditor::componentsTypes;
+std::vector<const char*>            Ctrl2DEditor::componentsTypesNames;

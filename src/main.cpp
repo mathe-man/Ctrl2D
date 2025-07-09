@@ -5,7 +5,14 @@
 // ImGui for editor UI
 // ==============================
 
+#include "Ctrl2DEditor.h"
 #include "Utils.h"
+class a : public Component
+{
+    const char* GetName() const override {return "aaAA";}
+    void Inspect() override {ImGui::TextUnformatted(GetName());}
+};
+REGISTER_COMP(a)
 
 
 int main() {

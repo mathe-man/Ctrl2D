@@ -22,7 +22,7 @@ public:
     /** @brief The scene containing this GameObject. */
     Scene* scene;
     /** @brief All the components of this GameObject. */
-    std::vector<std::unique_ptr<Component>> components;
+    std::vector<std::shared_ptr<Component>> components;
 
     /**
      * @brief Add a new component to the components of this GameObject.
@@ -61,6 +61,18 @@ public:
      * @remarks Create a new ImGui window only if it's necessary.
      */
     void Inspect();
+protected:
+    void AddComponent(Component* component)
+    {
+        for (const auto& comp : components)
+            if (comp.get()->GetName() == component->GetName())
+                return;
+
+        auto newComponent = std::shared_ptr<Component>(component);
+        newComponent->owner = this;
+        components.push_back(newComponent);
+    }
+    friend class Ctrl2DEditor;
 };
 
 
@@ -69,6 +81,9 @@ public:
 template <typename T, typename... Args>
 T* GameObject::AddComponent(Args&&... args)
 {
+    if (GetComponent<T>() != nullptr)
+        return nullptr;
+
     T* comp = new T(std::forward<Args>(args)...);
     comp->owner = this;
     components.emplace_back(comp);

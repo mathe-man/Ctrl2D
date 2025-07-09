@@ -1,3 +1,4 @@
+#pragma once
 #include "Scene.h"
 
 
@@ -21,7 +22,37 @@ public:
     void RunEditor(Scene* scene, const bool shutdownAtEnd = true);
 
     void Shutdown();
+
+
+    using ComponentConstructor = Component* (*)();
+    static void RegisterComponentTypeToEditor(ComponentConstructor constructor){
+        // Avoid duplicating
+        for (int i = 0; i < componentsTypes.size(); i++)
+            if (constructor()->GetName() == componentsTypesNames[i] ||
+                constructor == componentsTypes[i])
+                return;
+
+        componentsTypes.push_back(constructor);
+        componentsTypesNames.push_back(constructor()->GetName());
+    }
+    static std::vector<const char*> getComponentsTypesNames() {return componentsTypesNames;}
+    static std::vector<ComponentConstructor> getComponentsTypes() {return componentsTypes;}
+private:
+    static std::vector<ComponentConstructor> componentsTypes;
+    static std::vector<const char*> componentsTypesNames;
+
 };
 
+
+#define REGISTER_COMP(CLASSNAME)                                             \
+namespace {                                                                     \
+    Component* create_##CLASSNAME() { return new CLASSNAME; }                   \
+    struct CLASSNAME##_registrar {                                              \
+        CLASSNAME##_registrar() {                                               \
+            Ctrl2DEditor::RegisterComponentTypeToEditor(create_##CLASSNAME);    \
+        }                                                                       \
+    };                                                                          \
+static CLASSNAME##_registrar global_##CLASSNAME##_registrar;                    \
+}
 
 

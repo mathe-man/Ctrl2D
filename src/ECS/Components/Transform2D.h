@@ -1,5 +1,6 @@
 #include "Event.h"
-#include "../ECS/Component.h"
+#include "Component.h"
+#include "Ctrl2DEditor.h"
 #include "raylib.h"
 #include "raymath.h"
 
@@ -57,4 +58,4 @@ public:
     const char* GetName() const override {return "Transform2D";}
 
 };
-
+REGISTER_COMP(Transform2D)
