@@ -1,4 +1,5 @@
 #pragma once
+#include "imgui.h"
 #include "Scene.h"
 
 
@@ -7,7 +8,13 @@ class Ctrl2DEditor {
     bool inited = false;
     bool darkTheme = true;
 
+    // Editor drawing
     void DrawEditor(Scene* scene);
+    // Editor windows
+        void DrawSceneControlPanel(Scene* scene);
+        void DrawObjectInspector(Scene* scene);
+        bool ValidNameInput(const char* label, std::function<void(const char*)> OnValidInput, ImGuiPopupFlags flags = 0);
+
     static void CreateMainDockSpace();
 public:
     Ctrl2DEditor(bool immediateInit = true, Vector2 windowSize = Vector2{1280,720}, const char* title = "Ctrl2D Editor", bool darkTheme = true){
@@ -25,16 +32,7 @@ public:
 
 
     using ComponentConstructor = Component* (*)();
-    static void RegisterComponentTypeToEditor(ComponentConstructor constructor){
-        // Avoid duplicating
-        for (int i = 0; i < componentsTypes.size(); i++)
-            if (constructor()->GetName() == componentsTypesNames[i] ||
-                constructor == componentsTypes[i])
-                return;
-
-        componentsTypes.push_back(constructor);
-        componentsTypesNames.push_back(constructor()->GetName());
-    }
+    static void RegisterComponentTypeToEditor(ComponentConstructor constructor);
     static std::vector<const char*> getComponentsTypesNames() {return componentsTypesNames;}
     static std::vector<ComponentConstructor> getComponentsTypes() {return componentsTypes;}
 private:

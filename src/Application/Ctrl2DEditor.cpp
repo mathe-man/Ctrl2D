@@ -1,4 +1,7 @@
 #include "Ctrl2DEditor.h"
+
+#include <iostream>
+
 #include "imgui.h"
 #include "rlImGui.h"
 
@@ -62,13 +65,19 @@ void Ctrl2DEditor::DrawEditor(Scene* scene)
     CreateMainDockSpace();
     ImGui::ShowDemoWindow();
 
+
+    DrawSceneControlPanel(scene);
+    DrawObjectInspector(scene);
+}
+
+
+void Ctrl2DEditor::DrawSceneControlPanel(Scene* scene)
+{
     ImGui::Begin("Scene control panel");
     ImGui::SeparatorText("Scene infos");
 
     ImGui::Text("%zu objects in scene", scene->objects.size());
     ImGui::Text("Scene running at %d fps", GetFPS());
-
-
 
 
     if (ImGui::CollapsingHeader("Camera2D"))
@@ -93,44 +102,13 @@ void Ctrl2DEditor::DrawEditor(Scene* scene)
     }
 
 
-
     if (ImGui::CollapsingHeader("Objects"))
     {
-        // Create a new object
-        static char objName[64];
-
-
         ImGui::Button("Create Object");
-        if (ImGui::BeginPopupContextItem("Create Object", ImGuiPopupFlags_MouseButtonLeft))
-        {
-            // Make the text input focused by default
-            ImGui::SetKeyboardFocusHere();
-            // Create a text input for the object name
-            const bool EnterPressedOnInput = ImGui::InputText("##NameInput", objName, sizeof(objName),
-                                                                ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll);
-
-            // Show tips if the input is hovered
-            if (ImGui::IsItemHovered(ImGuiHoveredFlags_Stationary))
-                ImGui::SetTooltip("Enter a name for the new object. "
-                                  "The name should not be empty or start with a blank space");
-
-            // A name is valid if it's not empty and do not start with a blank space
-            const bool IsNameValid = objName[0] != '\0' && objName[0] != ' ';
-            // Create object if enter is pressed and the name is valid
-            if (EnterPressedOnInput && IsNameValid) {
-                scene->CreateObject(objName);
-
-                objName[0] = '\0';
-                ImGui::CloseCurrentPopup();
-            }
-            // Close the popup if the field is empty
-            else if (EnterPressedOnInput){
-                ImGui::CloseCurrentPopup();
-                objName[0] = '\0';
-            }
-
-            ImGui::EndPopup();
-        }
+        ValidNameInput("##name",
+            [scene](const char* name)
+            { scene->CreateObject(name); }
+            );
 
 
 
@@ -139,47 +117,103 @@ void Ctrl2DEditor::DrawEditor(Scene* scene)
             if (ImGui::Selectable(obj->name.c_str(), scene->selected == obj.get())) {
                 scene->selected = obj.get();
             }
+
+            if (ImGui::BeginPopupContextItem(obj->name.c_str()))
+            {
+                if (ImGui::Button("Delete"))
+                {
+                    scene->RemoveObject(obj.get());
+                    ImGui::CloseCurrentPopup();
+                }
+                ImGui::EndPopup();
+            }
         }
     }
 
     ImGui::End();
+}
 
+void Ctrl2DEditor::DrawObjectInspector(Scene* scene)
+{
+    ImGui::Begin("Object Inspector");
 
     if (scene->selected) {
         GameObject* s = scene->selected;
 
 
-        ImGui::Begin("Inspector");
-            ImGui::Text("Game Object: %s", s->name.c_str());
-            ImGui::Text("With %zu components", s->components.size());
+        ImGui::Text("Game Object: %s", s->name.c_str());
+        ImGui::Text("With %zu components", s->components.size());
 
-            // Add a new component
-            static int comp_selected_index = 0;
-            auto comps = getComponentsTypesNames();
-            if (ImGui::Button("Add new component"))
-                // Add a new instance of the selected component to the GameObject
+        // Add a new component
+        static int comp_selected_index = 0;
+        auto comps = getComponentsTypesNames();
+        if (ImGui::Button("Add new component"))
+            // Add a new instance of the selected component to the GameObject
                 s->AddComponent(getComponentsTypes()[comp_selected_index]());
 
-            ImGui::SameLine();
-            if (ImGui::BeginCombo("##selectionCombo", comps[comp_selected_index], ImGuiComboFlags_WidthFitPreview))
+        ImGui::SameLine();
+        if (ImGui::BeginCombo("##selectionCombo", comps[comp_selected_index], ImGuiComboFlags_WidthFitPreview))
+        {
+            for (int i = 0; i < comps.size(); i++)
             {
-                for (int i = 0; i < comps.size(); i++)
-                {
-                    const bool is_selected = (i == comp_selected_index);
-                    if (ImGui::Selectable(comps[i], is_selected))
-                        comp_selected_index = i;
+                const bool is_selected = (i == comp_selected_index);
+                if (ImGui::Selectable(comps[i], is_selected))
+                    comp_selected_index = i;
 
-                    if (is_selected)
-                        ImGui::SetItemDefaultFocus();
-                }
-                ImGui::EndCombo();
+                if (is_selected)
+                    ImGui::SetItemDefaultFocus();
             }
+            ImGui::EndCombo();
+        }
 
-            s->Inspect();
-        ImGui::End();
-
+        s->Inspect();
     }
+    else ImGui::Text("No selected object");
+
+    ImGui::End();
 }
+
+bool Ctrl2DEditor::ValidNameInput(const char* label, std::function<void(const char*)> OnValidInput, ImGuiPopupFlags flags)
+{
+    static char input[64];
+    bool EnterPressedOnInput = false;
+
+    if (ImGui::BeginPopupContextItem(label, flags))
+    {
+        ImGui::SetKeyboardFocusHere();
+
+        EnterPressedOnInput = ImGui::InputText("##NameInput", input, sizeof(input),
+                                                                ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll);
+
+
+        // Show tips if the input is hovered
+        if (ImGui::IsItemHovered(ImGuiHoveredFlags_Stationary))
+            ImGui::SetTooltip("Enter a name valid name"
+                              "The name should not be empty or start with a blank space");
+
+
+        // A name is valid if it's not empty and do not start with a blank space
+        const bool IsNameValid = input[0] != '\0' && input[0] != ' ';
+        // Create object if enter is pressed and the name is valid
+        if (EnterPressedOnInput && IsNameValid) {
+            OnValidInput(input);
+
+            input[0] = '\0';
+            ImGui::CloseCurrentPopup();
+        }
+        // Close the popup if the field is empty
+        else if (EnterPressedOnInput){
+            ImGui::CloseCurrentPopup();
+            input[0] = '\0';
+        }
+
+        ImGui::EndPopup();
+    }
+
+    return EnterPressedOnInput;
+}
+
+
 
 void Ctrl2DEditor::CreateMainDockSpace()
 {
@@ -215,7 +249,20 @@ void Ctrl2DEditor::CreateMainDockSpace()
 }
 
 
-// define static properties
+
 using ComponentConstructor = Component* (*)();
+
+void Ctrl2DEditor::RegisterComponentTypeToEditor(ComponentConstructor constructor)
+{
+    // Avoid duplicating
+    for (int i = 0; i < componentsTypes.size(); i++)
+        if (constructor()->GetName() == componentsTypesNames[i] ||
+            constructor == componentsTypes[i])
+            return;
+
+    componentsTypes.push_back(constructor);
+    componentsTypesNames.push_back(constructor()->GetName());
+}
+// define static properties
 std::vector<ComponentConstructor>   Ctrl2DEditor::componentsTypes;
 std::vector<const char*>            Ctrl2DEditor::componentsTypesNames;
