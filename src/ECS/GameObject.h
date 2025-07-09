@@ -35,7 +35,7 @@ public:
     T* AddComponent(Args&&... args);
 
     /**
-     *
+     * @brief Get the first component of this type
      * @tparam T The wanted type of component.
      * @return The first component matching the T type.
      * found in this GameObject components list.
