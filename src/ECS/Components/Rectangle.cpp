@@ -30,10 +30,10 @@ void RectangleOutline::Draw()
 
 void RectangleOutline::Inspect()
 {
-    ImGui::DragFloat("width", &width, 0.5f);
-    ImGui::DragFloat("height", &height, 0.5f);
+    ImGui::DragFloat(Utils::MakeImGuiUniqueLabel("height", this), &width, 0.5f);
+    ImGui::DragFloat(Utils::MakeImGuiUniqueLabel("width", this), &height, 0.5f);
 
-    Utils::MakeImGuiColorEdit4(&color);
+    Utils::MakeImGuiColorEdit4(Utils::MakeImGuiUniqueLabel("color", this), &color);
 
 }
 

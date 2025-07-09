@@ -22,11 +22,11 @@ EllipseOutline::EllipseOutline(Vector2 dimensions, Color color)
 
 void EllipseOutline::Inspect()
 {
-    ImGui::DragFloat(std::string(std::string("width##") + GetName()).c_str(), &width, 0.5f, 0, 1000);
-    ImGui::DragFloat(std::string(std::string("height##") + GetName()).c_str(), &height, 0.5f, 0, 1000);
+    ImGui::DragFloat(Utils::MakeImGuiUniqueLabel("width", this), &width, 0.5f, 0, 1000);
+    ImGui::DragFloat(Utils::MakeImGuiUniqueLabel("height", this), &height, 0.5f, 0, 1000);
 
     // Convert Color into float[4] for ImGui
-    Utils::MakeImGuiColorEdit4(&color);
+    Utils::MakeImGuiColorEdit4(Utils::MakeImGuiUniqueLabel("color", this), &color);
 }
 
 void EllipseOutline::Draw()

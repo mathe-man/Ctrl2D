@@ -12,7 +12,7 @@
 #include "Transform2D.h"
 
 
-void Utils::MakeImGuiColorEdit4(Color* color)
+void Utils::MakeImGuiColorEdit4(const char* label, Color* color)
 {
     float colEdit[4] = {
         color->r / 255.0f,
@@ -21,7 +21,7 @@ void Utils::MakeImGuiColorEdit4(Color* color)
         color->a / 255.0f
     };
 
-    if (ImGui::ColorEdit4("color", colEdit)){
+    if (ImGui::ColorEdit4(label, colEdit)){
         color->r = (unsigned char)(colEdit[0] * 255);
         color->g = (unsigned char)(colEdit[1] * 255);
         color->b = (unsigned char)(colEdit[2] * 255);
@@ -29,7 +29,7 @@ void Utils::MakeImGuiColorEdit4(Color* color)
     }
 }
 
-void Utils::MakeImGuiColorEdit3(Color* color)
+void Utils::MakeImGuiColorEdit3(const char* label, Color* color)
 {
     float colEdit[3] = {
         color->r / 255.0f,
@@ -37,11 +37,16 @@ void Utils::MakeImGuiColorEdit3(Color* color)
         color->b / 255.0f
     };
 
-    if (ImGui::ColorEdit3("color", colEdit)){
+    if (ImGui::ColorEdit3(label, colEdit)){
         color->r = (unsigned char)(colEdit[0] * 255);
         color->g = (unsigned char)(colEdit[1] * 255);
         color->b = (unsigned char)(colEdit[2] * 255);
     }
+}
+
+const char* Utils::MakeImGuiUniqueLabel(const char* label, const Component* component)
+{
+    return std::string(std::string(label) + "##" + component->GetName()).c_str();
 }
 
 
