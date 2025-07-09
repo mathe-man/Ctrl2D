@@ -13,7 +13,9 @@ class Ctrl2DEditor {
     // Editor windows
         void DrawSceneControlPanel(Scene* scene);
         void DrawObjectInspector(Scene* scene);
+
         bool ValidNameInput(const char* label, std::function<void(const char*)> OnValidInput, ImGuiPopupFlags flags = 0);
+        void GameObjectInterations(GameObject* obj);
 
     static void CreateMainDockSpace();
 public:

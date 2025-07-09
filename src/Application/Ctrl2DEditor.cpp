@@ -117,16 +117,8 @@ void Ctrl2DEditor::DrawSceneControlPanel(Scene* scene)
             if (ImGui::Selectable(obj->name.c_str(), scene->selected == obj.get())) {
                 scene->selected = obj.get();
             }
+            GameObjectInterations(obj.get());
 
-            if (ImGui::BeginPopupContextItem(obj->name.c_str()))
-            {
-                if (ImGui::Button("Delete"))
-                {
-                    scene->RemoveObject(obj.get());
-                    ImGui::CloseCurrentPopup();
-                }
-                ImGui::EndPopup();
-            }
         }
     }
 
@@ -212,6 +204,20 @@ bool Ctrl2DEditor::ValidNameInput(const char* label, std::function<void(const ch
 
     return EnterPressedOnInput;
 }
+
+void Ctrl2DEditor::GameObjectInterations(GameObject* obj)
+{
+    if (ImGui::BeginPopupContextItem(obj->name.c_str()))
+    {
+        if (ImGui::Button("Delete"))
+        {
+            obj->scene->RemoveObject(obj);
+            ImGui::CloseCurrentPopup();
+        }
+        ImGui::EndPopup();
+    }
+}
+
 
 
 
