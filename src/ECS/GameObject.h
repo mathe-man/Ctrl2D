@@ -21,8 +21,10 @@ public:
     std::string name;
     /** @brief The scene containing this GameObject. */
     Scene* scene;
+    GameObject* parent;
     /** @brief All the components of this GameObject. */
     std::vector<std::shared_ptr<Component>> components;
+    std::vector<std::shared_ptr<GameObject>> childrens;
 
     /**
      * @brief Add a new component to the components of this GameObject.

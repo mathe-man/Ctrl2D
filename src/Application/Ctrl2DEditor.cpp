@@ -134,7 +134,8 @@ void Ctrl2DEditor::DrawObjectInspector(Scene* scene)
 
 
         ImGui::Text("Game Object: %s", s->name.c_str());
-        ImGui::Text("With %zu components", s->components.size());
+        ImGui::Text("With %zu child", s->childrens.size());
+        ImGui::Text("With %zu component", s->components.size());
 
         // Add a new component
         static int comp_selected_index = 0;
@@ -214,6 +215,12 @@ void Ctrl2DEditor::GameObjectInterations(GameObject* obj)
             obj->scene->RemoveObject(obj);
             ImGui::CloseCurrentPopup();
         }
+        if (ImGui::Button("Add child"))
+        {
+            obj->childrens.push_back(std::make_shared<GameObject>("Child"));
+            obj->childrens.back().get()->parent = obj;
+        }
+
         ImGui::EndPopup();
     }
 }
